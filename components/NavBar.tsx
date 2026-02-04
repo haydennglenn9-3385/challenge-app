@@ -7,14 +7,12 @@ import { useState, useEffect } from "react";
 export default function NavBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [avatarColor, setAvatarColor] = useState("#d4d4d4");
+
+  const [hasProfile, setHasProfile] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("userProfile");
-    if (stored) {
-      const profile = JSON.parse(stored);
-      setAvatarColor(profile.avatarColor || "#d4d4d4");
-    }
+    setHasProfile(!!stored);
   }, []);
 
   const linkClasses = (path: string) =>
@@ -48,9 +46,10 @@ export default function NavBar() {
       {/* RIGHT SIDE — Avatar */}
       <Link href="/profile" className="hidden md:flex items-center">
         <div
-          className="w-8 h-8 rounded-full border"
-          style={{ backgroundColor: avatarColor }}
-        />
+          className="w-8 h-8 rounded-full border flex items-center justify-center text-gray-700 text-sm"
+        >
+          👤
+        </div>
       </Link>
 
       {/* MOBILE MENU */}
@@ -61,10 +60,9 @@ export default function NavBar() {
           <Link href="/join" className="px-6 py-3 text-gray-700 hover:bg-gray-100" onClick={() => setOpen(false)}>Join</Link>
 
           <Link href="/profile" className="px-6 py-3 flex items-center gap-3 border-t mt-3" onClick={() => setOpen(false)}>
-            <div
-              className="w-8 h-8 rounded-full border"
-              style={{ backgroundColor: avatarColor }}
-            />
+            <div className="w-8 h-8 rounded-full border flex items-center justify-center text-gray-700 text-sm">
+              👤
+            </div>
             <span className="text-gray-700">Profile</span>
           </Link>
         </div>
