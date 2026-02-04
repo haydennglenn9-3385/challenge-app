@@ -2,9 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { generateShortId } from "@/lib/generateId";
+import { addChallenge } from "@/lib/storage";
 
 function generateJoinCode() {
-  return Math.random().toString(36).substring(2, 8).toUpperCase();
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
 }
 
 export default function CreateChallengePage() {
@@ -16,18 +23,21 @@ export default function CreateChallengePage() {
   const [task, setTask] = useState("");
 
   const handleCreate = () => {
+    const id = generateShortId();
     const joinCode = generateJoinCode();
 
     const challenge = {
+      id,
       title,
       description,
       duration,
       task,
       joinCode,
       createdAt: new Date().toISOString(),
+      team: [], // team auto-assign happens later
     };
 
-    localStorage.setItem("currentChallenge", JSON.stringify(challenge));
+    addChallenge(challenge);
     router.push("/dashboard");
   };
 
