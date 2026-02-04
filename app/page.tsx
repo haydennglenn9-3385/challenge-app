@@ -1,16 +1,17 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-50 flex flex-col">
+    <main className="min-h-screen bg-white text-slate-900 flex flex-col">
 
       {/* Main content */}
-      <section className="flex-1 flex flex-col items-center justify-center px-6 py-12 space-y-6">
+      <section className="flex-1 flex flex-col items-center justify-center px-6 py-20 space-y-8">
 
-        {/* Hero */}
-        <p className="text-xs uppercase tracking-[0.2em] text-emerald-300/80">
+        {/* Hero Tagline */}
+        <p className="text-sm uppercase tracking-[0.2em] text-emerald-600/80">
           Trauma-informed • Queer-centered • Strength-first
         </p>
 
-        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-center">
+        {/* Apple-style Hero Heading */}
+        <h1 className="text-5xl sm:text-6xl font-semibold tracking-tight text-center leading-tight">
           Turn movement into{" "}
           <span className="bg-gradient-to-tr from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
             community power
@@ -18,57 +19,61 @@ export default function Home() {
           .
         </h1>
 
-        <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto text-center">
+        {/* Supporting Text */}
+        <p className="text-slate-600 text-lg max-w-2xl mx-auto text-center leading-relaxed">
           Run inclusive, low-pressure movement challenges that actually feel good—no shame, no leaderboards of doom,
           just steady wins and collective momentum.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
           <a
             href="/create"
-            className="px-5 py-2.5 rounded-full bg-emerald-400 text-slate-950 font-medium text-sm hover:bg-emerald-300 transition text-center"
+            className="px-6 py-3 rounded-full bg-black text-white font-medium text-sm hover:bg-slate-800 transition text-center"
           >
             Start a new challenge
           </a>
           <a
             href="/join"
-            className="px-5 py-2.5 rounded-full border border-slate-700 text-sm hover:border-slate-500 transition text-center"
+            className="px-6 py-3 rounded-full border border-slate-300 text-slate-700 hover:border-slate-400 hover:text-black transition text-center"
           >
             Join with a code
           </a>
         </div>
 
-        {/* Feature cards */}
-        <div className="mt-10 grid gap-4 sm:grid-cols-3 max-w-4xl w-full">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4 space-y-2">
-            <p className="text-xs font-medium text-emerald-300">Flexible structure</p>
-            <h2 className="text-sm font-semibold">Teams, solo, or hybrid</h2>
-            <p className="text-xs text-slate-300">
+        {/* Feature Cards */}
+        <div className="mt-20 grid gap-6 sm:grid-cols-3 max-w-5xl w-full">
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3">
+            <p className="text-xs font-medium text-emerald-600">Flexible structure</p>
+            <h2 className="text-lg font-semibold">Teams, solo, or hybrid</h2>
+            <p className="text-sm text-slate-600">
               Build challenges that work for your people—pair folks up, create pods, or let them move solo with support.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4 space-y-2">
-            <p className="text-xs font-medium text-emerald-300">Trauma-informed</p>
-            <h2 className="text-sm font-semibold">No shame, no grind culture</h2>
-            <p className="text-xs text-slate-300">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3">
+            <p className="text-xs font-medium text-emerald-600">Trauma-informed</p>
+            <h2 className="text-lg font-semibold">No shame, no grind culture</h2>
+            <p className="text-sm text-slate-600">
               Center consent, pacing, and nervous system safety while still giving folks a clear, motivating structure.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4 space-y-2">
-            <p className="text-xs font-medium text-emerald-300">Admin-friendly</p>
-            <h2 className="text-sm font-semibold">Simple to run, easy to repeat</h2>
-            <p className="text-xs text-slate-300">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3">
+            <p className="text-xs font-medium text-emerald-600">Admin-friendly</p>
+            <h2 className="text-lg font-semibold">Simple to run, easy to repeat</h2>
+            <p className="text-sm text-slate-600">
               Reuse templates, tweak rules, and keep everything in one place instead of juggling spreadsheets and DMs.
             </p>
           </div>
+
         </div>
 
       </section>
 
       {/* Footer */}
-      <footer className="w-full border-t border-slate-800 px-6 py-4 text-xs text-slate-500 flex justify-between">
+      <footer className="w-full border-t border-slate-200 px-6 py-4 text-xs text-slate-500 flex justify-between">
         <span>© {new Date().getFullYear()} Queers & Allies Fitness</span>
         <span>Built with care, not chaos.</span>
       </footer>
