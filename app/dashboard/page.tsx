@@ -17,6 +17,9 @@ type TeamMember = {
   score: number;
 };
 
+// ---------------------------
+// Progress Ring Component
+// ---------------------------
 function ProgressRing({ progress }: { progress: number }) {
   const radius = 40;
   const stroke = 8;
@@ -50,16 +53,53 @@ function ProgressRing({ progress }: { progress: number }) {
   );
 }
 
+// ---------------------------
+// Confetti Component
+// ---------------------------
 function Confetti({ visible }: { visible: boolean }) {
   if (!visible) return null;
 
+  const pieces = Array.from({ length: 20 });
+
   return (
-    <div className="fixed inset-0 pointer-events-none flex items-center justify-center z-50">
-      <div className="text-5xl animate-bounce">🎉</div>
+    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+      {pieces.map((_, i) => (
+        <div
+          key={i}
+          className="absolute text-2xl animate-confetti"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 20}%`,
+            animationDelay: `${Math.random() * 0.2}s`,
+            transform: `rotate(${Math.random() * 360}deg)`,
+          }}
+        >
+          {Math.random() > 0.5 ? "✨" : "🎉"}
+        </div>
+      ))}
+
+      <style jsx>{`
+        @keyframes confettiFall {
+          0% {
+            transform: translateY(0) scale(1) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(200px) scale(0.8) rotate(45deg);
+            opacity: 0;
+          }
+        }
+        .animate-confetti {
+          animation: confettiFall 1s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 }
 
+// ---------------------------
+// Dashboard Page
+// ---------------------------
 export default function DashboardPage() {
   const router = useRouter();
 
@@ -96,7 +136,7 @@ export default function DashboardPage() {
       setCheckedInToday(true);
     }
 
-    // Mock team data (auto-assign feel)
+    // Mock team data
     setTeam([
       { name: "You", score: 10 },
       { name: "Alex", score: 8 },
@@ -116,6 +156,7 @@ export default function DashboardPage() {
       localStorage.setItem("lastCheckIn", today);
       setCheckedInToday(true);
 
+      // Confetti burst
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 1200);
     }
