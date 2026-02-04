@@ -15,7 +15,8 @@ export default function Home() {
       {/* Main content */}
       <section className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         {/* Hero */}
-        <div className="max-w-3xl text-center space-y-4">
+        <h1 className="text-6xl text-pink-500">Test</h1>
+
           <p className="text-xs uppercase tracking-[0.2em] text-emerald-300/80">
             Trauma-informed • Queer-centered • Strength-first
           </p>
