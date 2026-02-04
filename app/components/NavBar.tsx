@@ -1,18 +1,23 @@
 export default function NavBar() {
   return (
-    <nav className="w-full border-b border-slate-800 px-6 py-4 flex items-center justify-between bg-slate-950/80 backdrop-blur">
+    <nav className="w-full bg-white/80 backdrop-blur border-b border-slate-200 px-8 py-4 flex items-center justify-between">
+      {/* Left side: Logo */}
       <div className="flex items-center gap-2">
-        <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-400" />
-        <span className="font-semibold tracking-tight">Queers & Allies</span>
+        <div className="h-6 w-6 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-400" />
+        <span className="font-semibold tracking-tight text-slate-900">
+          Queers & Allies
+        </span>
       </div>
 
-      <div className="flex items-center gap-6 text-sm">
-        <a href="/" className="hover:text-emerald-300 transition">Home</a>
-        <a href="/join" className="hover:text-emerald-300 transition">Join</a>
-        <a href="/create" className="hover:text-emerald-300 transition">Create</a>
+      {/* Center links */}
+      <div className="hidden sm:flex items-center gap-8 text-sm text-slate-700">
+        <a href="/" className="hover:text-black transition">Home</a>
+        <a href="/join" className="hover:text-black transition">Join</a>
+        <a href="/create" className="hover:text-black transition">Create</a>
       </div>
 
-      <button className="text-sm px-3 py-1.5 rounded-full border border-slate-700 hover:border-emerald-400 hover:text-emerald-300 transition">
+      {/* Right side: Login */}
+      <button className="text-sm px-4 py-1.5 rounded-full border border-slate-300 text-slate-700 hover:border-slate-400 hover:text-black transition">
         Log in
       </button>
     </nav>
