@@ -14,18 +14,14 @@ export default function Home() {
       </header>
 
       {/* Main content */}
-      <section className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-
-        {/* Tailwind test */}
-        <div className="bg-red-500 h-20 w-full"></div>
-        <h1 className="text-6xl text-pink-500">TEST</h1>
+      <section className="flex-1 flex flex-col items-center justify-center px-6 py-12 space-y-6">
 
         {/* Hero */}
         <p className="text-xs uppercase tracking-[0.2em] text-emerald-300/80">
           Trauma-informed • Queer-centered • Strength-first
         </p>
 
-        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
+        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-center">
           Turn movement into{" "}
           <span className="bg-gradient-to-tr from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
             community power
@@ -33,7 +29,7 @@ export default function Home() {
           .
         </h1>
 
-        <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto text-center">
           Run inclusive, low-pressure movement challenges that actually feel good—no shame, no leaderboards of doom,
           just steady wins and collective momentum.
         </p>
