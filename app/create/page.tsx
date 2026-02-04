@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+function generateJoinCode() {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
 export default function CreateChallengePage() {
   const router = useRouter();
 
@@ -12,17 +16,18 @@ export default function CreateChallengePage() {
   const [task, setTask] = useState("");
 
   const handleCreate = () => {
+    const joinCode = generateJoinCode();
+
     const challenge = {
       title,
       description,
       duration,
       task,
+      joinCode,
       createdAt: new Date().toISOString(),
     };
 
-    // Temporary local storage "database"
     localStorage.setItem("currentChallenge", JSON.stringify(challenge));
-
     router.push("/dashboard");
   };
 
