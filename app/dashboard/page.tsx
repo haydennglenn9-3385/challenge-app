@@ -1,10 +1,10 @@
 "use client";
 
 import confetti from "canvas-confetti";
+import ProgressRing from "@/components/ProgressRing";
 
 export default function DashboardPage() {
   function handleLog() {
-    // Fire confetti for streak increases
     confetti({
       particleCount: 100,
       spread: 70,
@@ -28,11 +28,9 @@ export default function DashboardPage() {
         </p>
       </section>
 
-      {/* Progress Ring Placeholder */}
+      {/* Progress Ring Section */}
       <section className="w-full max-w-md flex flex-col items-center mb-20">
-        <div className="h-48 w-48 rounded-full border-[10px] border-slate-200 flex items-center justify-center text-slate-400 text-sm">
-          Progress Ring Coming Soon
-        </div>
+        <ProgressRing progress={40} color="#34d399" />
 
         <button
           onClick={handleLog}
