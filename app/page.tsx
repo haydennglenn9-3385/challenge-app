@@ -1,3 +1,4 @@
+<div className="bg-red-500 h-20 w-full"></div>
 export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50 flex flex-col">
