@@ -1,14 +1,13 @@
 export default function HomePage() {
   return (
-    <main className="max-w-4xl mx-auto px-6 py-16">
+    <div className="max-w-4xl mx-auto px-6 py-16">
       <h1 className="text-4xl font-semibold tracking-tight mb-4">
         Queers & Allies Challenges
       </h1>
 
       <p className="text-gray-600 text-lg leading-relaxed max-w-2xl">
         A community-driven movement challenge platform designed to bring people
-        together, build healthy habits, and celebrate progress. Join a challenge,
-        create your own, or track your streaks — all in one clean, modern space.
+        together, build healthy habits, and celebrate progress.
       </p>
 
       <div className="mt-10 flex gap-4">
@@ -26,6 +25,6 @@ export default function HomePage() {
           Create a Challenge
         </a>
       </div>
-    </main>
+    </div>
   );
 }
