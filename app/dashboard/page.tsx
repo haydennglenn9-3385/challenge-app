@@ -1,82 +1,83 @@
 "use client";
 
-import confetti from "canvas-confetti";
-import ProgressRing from "@/components/ProgressRing";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
-  function handleLog() {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ["#34d399", "#06b6d4", "#a855f7", "#f472b6"],
-    });
+  const [challenge, setChallenge] = useState<any>(null);
+  const [streak, setStreak] = useState(0);
+  const [checkedInToday, setCheckedInToday] = useState(false);
 
-    console.log("Movement logged!");
+  useEffect(() => {
+    const stored = localStorage.getItem("currentChallenge");
+    if (stored) {
+      setChallenge(JSON.parse(stored));
+    }
+
+    const streakValue = localStorage.getItem("streak");
+    if (streakValue) setStreak(Number(streakValue));
+
+    const today = new Date().toDateString();
+    const lastCheck = localStorage.getItem("lastCheckIn");
+
+    if (lastCheck === today) {
+      setCheckedInToday(true);
+    }
+  }, []);
+
+  const handleCheckIn = () => {
+    const today = new Date().toDateString();
+    const lastCheck = localStorage.getItem("lastCheckIn");
+
+    if (lastCheck !== today) {
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      localStorage.setItem("streak", String(newStreak));
+      localStorage.setItem("lastCheckIn", today);
+      setCheckedInToday(true);
+    }
+  };
+
+  if (!challenge) {
+    return (
+      <div className="max-w-xl mx-auto px-6 py-10">
+        <p className="text-gray-600">No challenge found. Create one first.</p>
+      </div>
+    );
   }
 
   return (
-    <main className="min-h-screen bg-white text-slate-900 px-6 py-20 flex flex-col items-center">
+    <div className="max-w-xl mx-auto px-6 py-10">
+      <h1 className="text-3xl font-semibold mb-2">{challenge.title}</h1>
+      <p className="text-gray-600 mb-6">{challenge.description}</p>
 
-      {/* Hero Section */}
-      <section className="w-full max-w-4xl text-center mb-16">
-        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-4">
-          Your Challenge Dashboard
-        </h1>
-        <p className="text-slate-600 text-lg leading-relaxed max-w-2xl mx-auto">
-          Track your progress, celebrate your wins, and stay connected with your community.
-        </p>
-      </section>
-
-      {/* Progress Ring Section */}
-      <section className="w-full max-w-md flex flex-col items-center mb-20">
-        <ProgressRing progress={40} color="#34d399" />
-
-        <button
-          onClick={handleLog}
-          className="mt-8 px-6 py-3 rounded-full bg-black text-white font-medium text-sm hover:bg-slate-800 transition"
-        >
-          Log today’s movement
-        </button>
-      </section>
-
-      {/* Cards Section */}
-      <section className="w-full max-w-5xl grid gap-8 sm:grid-cols-2">
-
-        {/* Streak Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3">
-          <h2 className="text-xl font-semibold">Your Streak</h2>
-          <p className="text-slate-600 text-sm">
-            Keep showing up — every day counts.
-          </p>
-          <div className="text-4xl font-bold text-emerald-600">3 days</div>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <p className="text-sm text-gray-500">Duration</p>
+          <p className="text-lg font-medium">{challenge.duration} days</p>
         </div>
 
-        {/* Challenge Overview */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3">
-          <h2 className="text-xl font-semibold">Challenge Overview</h2>
-          <p className="text-slate-600 text-sm">
-            30‑Day Movement Challenge • Day 4 of 30
-          </p>
-          <p className="text-slate-600 text-sm">
-            A gentle, inclusive challenge focused on daily movement and nervous system safety.
-          </p>
+        <div>
+          <p className="text-sm text-gray-500">Streak</p>
+          <p className="text-lg font-medium">{streak} days 🔥</p>
         </div>
+      </div>
 
-        {/* Team Progress Placeholder */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3 sm:col-span-2">
-          <h2 className="text-xl font-semibold">Team Progress</h2>
-          <p className="text-slate-600 text-sm mb-4">
-            See how your team is doing — support each other and celebrate wins.
-          </p>
+      <div className="mb-8">
+        <p className="text-sm text-gray-500 mb-1">Today's Task</p>
+        <p className="text-lg font-medium">{challenge.task}</p>
+      </div>
 
-          <div className="w-full h-32 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-sm">
-            Team Progress Visualization Coming Soon
-          </div>
-        </div>
-
-      </section>
-
-    </main>
+      <button
+        onClick={handleCheckIn}
+        disabled={checkedInToday}
+        className={`w-full py-3 rounded-lg font-medium transition ${
+          checkedInToday
+            ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+            : "bg-black text-white hover:bg-gray-900"
+        }`}
+      >
+        {checkedInToday ? "Checked In Today" : "Check In"}
+      </button>
+    </div>
   );
 }
