@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import NavBar from "./components/NavBar";
 
 export const metadata: Metadata = {
   title: "Queers & Allies Challenges",
-  description: "Gamified fitness challenges for the community",
+  description: "A community-driven movement challenge platform.",
 };
 
 export default function RootLayout({
@@ -14,8 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">
-        <NavBar />
+      <body className="bg-white text-slate-900">
         {children}
       </body>
     </html>
