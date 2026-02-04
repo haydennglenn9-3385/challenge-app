@@ -2,17 +2,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50 flex flex-col">
 
-      {/* Top bar */}
-      <header className="w-full border-b border-slate-800 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-400" />
-          <span className="font-semibold tracking-tight">Queers & Allies Challenges</span>
-        </div>
-        <button className="text-sm px-3 py-1.5 rounded-full border border-slate-700 hover:border-emerald-400 hover:text-emerald-300 transition">
-          Log in
-        </button>
-      </header>
-
       {/* Main content */}
       <section className="flex-1 flex flex-col items-center justify-center px-6 py-12 space-y-6">
 
@@ -35,12 +24,18 @@ export default function Home() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
-          <button className="px-5 py-2.5 rounded-full bg-emerald-400 text-slate-950 font-medium text-sm hover:bg-emerald-300 transition">
+          <a
+            href="/create"
+            className="px-5 py-2.5 rounded-full bg-emerald-400 text-slate-950 font-medium text-sm hover:bg-emerald-300 transition text-center"
+          >
             Start a new challenge
-          </button>
-          <button className="px-5 py-2.5 rounded-full border border-slate-700 text-sm hover:border-slate-500 transition">
+          </a>
+          <a
+            href="/join"
+            className="px-5 py-2.5 rounded-full border border-slate-700 text-sm hover:border-slate-500 transition text-center"
+          >
             Join with a code
-          </button>
+          </a>
         </div>
 
         {/* Feature cards */}
