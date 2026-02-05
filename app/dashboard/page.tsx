@@ -47,6 +47,7 @@ function ProgressRing({ progress }: { progress: number }) {
 export default function DashboardPage() {
   const router = useRouter();
   const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [showSettings, setShowSettings] = useState(false);
 
   // Require profile
   useEffect(() => {
@@ -67,9 +68,38 @@ export default function DashboardPage() {
     router.push(`/challenge/${id}`);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("userProfile");
+    window.location.href = "/profile";
+  };
+
   return (
     <div className="max-w-xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-semibold mb-6">Your Challenges</h1>
+      {/* Header + Settings Icon */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-semibold">Your Challenges</h1>
+
+        <button
+          onClick={() => setShowSettings(true)}
+          className="p-2 rounded-full hover:bg-gray-100 transition"
+          aria-label="Open settings"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 6h3m-3 6h3m-3 6h3"
+            />
+          </svg>
+        </button>
+      </div>
 
       {challenges.length === 0 && (
         <p className="text-gray-600">
@@ -101,6 +131,29 @@ export default function DashboardPage() {
           );
         })}
       </div>
+
+      {/* Settings Sheet */}
+      {showSettings && (
+        <div className="fixed inset-0 bg-black/40 flex justify-center items-end">
+          <div className="bg-white w-full max-w-xl rounded-t-2xl p-6 shadow-xl">
+            <h2 className="text-xl font-semibold mb-4">Settings</h2>
+
+            <button
+              onClick={handleLogout}
+              className="w-full text-left py-3 text-red-600 font-medium"
+            >
+              Log out
+            </button>
+
+            <button
+              onClick={() => setShowSettings(false)}
+              className="w-full text-left py-3 text-gray-600"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
