@@ -7,9 +7,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const [showSettings, setShowSettings] = useState(false);
 
   const handleLogout = async () => {
-    // Import Supabase ONLY when the user clicks logout
     const { supabase } = await import("@/lib/supabaseClient");
-
     await supabase.auth.signOut();
     localStorage.removeItem("userProfile");
     window.location.href = "/login";
@@ -17,10 +15,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="en">
-      <body className="min-h-screen bg-white">
-        {/* Global Header */}
-        <header className="flex justify-between items-center px-6 py-4 border-b">
-          <h1 className="text-xl font-semibold">Challenge App</h1>
+      <body className="min-h-screen bg-white flex flex-col">
+        {/* GLOBAL HEADER */}
+        <header className="flex justify-between items-center px-6 py-4 border-b bg-white">
+          <h1
+            className="text-xl font-semibold cursor-pointer"
+            onClick={() => (window.location.href = "/dashboard")}
+          >
+            Challenge App
+          </h1>
 
           <div className="flex items-center gap-4">
             {/* Profile Icon */}
@@ -32,7 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               />
             </button>
 
-            {/* Settings Icon */}
+            {/* Settings Icon (replaces hamburger) */}
             <button
               onClick={() => setShowSettings(true)}
               className="p-2 rounded-full hover:bg-gray-100 transition"
@@ -54,10 +57,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="max-w-xl mx-auto px-6 py-6">{children}</main>
+        {/* PAGE CONTENT */}
+        <main className="flex-1 max-w-xl mx-auto w-full px-6 py-6">
+          {children}
+        </main>
 
-        {/* Settings Sheet */}
+        {/* SETTINGS SHEET */}
         {showSettings && (
           <div className="fixed inset-0 bg-black/40 flex justify-center items-end z-50">
             <div className="bg-white w-full max-w-xl rounded-t-2xl p-6 shadow-xl animate-slide-up">
