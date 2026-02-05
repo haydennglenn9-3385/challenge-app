@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,7 +17,9 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
 
-    // 1. Sign in with Supabase Auth
+    // Import Supabase ONLY on the client
+    const { supabase } = await import("@/lib/supabaseClient");
+
     const { data, error: loginError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -30,7 +31,6 @@ export default function LoginPage() {
       return;
     }
 
-    // 2. Redirect to dashboard
     if (data.session) {
       router.push("/dashboard");
     }
