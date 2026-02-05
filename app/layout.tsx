@@ -2,12 +2,14 @@
 
 import "./globals.css";
 import { ReactNode, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [showSettings, setShowSettings] = useState(false);
 
   const handleLogout = async () => {
+    // Import Supabase ONLY when the user clicks logout
+    const { supabase } = await import("@/lib/supabaseClient");
+
     await supabase.auth.signOut();
     localStorage.removeItem("userProfile");
     window.location.href = "/login";
