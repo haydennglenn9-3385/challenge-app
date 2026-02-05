@@ -1,15 +1,25 @@
 "use client";
 
 import "./globals.css";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [showSettings, setShowSettings] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    async function checkSession() {
+      const { supabase } = await import("@/lib/supabaseClient");
+      const { data } = await supabase.auth.getSession();
+      setLoggedIn(!!data.session);
+    }
+    checkSession();
+  }, []);
 
   const handleLogout = async () => {
     const { supabase } = await import("@/lib/supabaseClient");
     await supabase.auth.signOut();
-    localStorage.removeItem("userProfile");
+    setLoggedIn(false);
     window.location.href = "/login";
   };
 
@@ -20,40 +30,46 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <header className="flex justify-between items-center px-6 py-4 border-b bg-white">
           <h1
             className="text-xl font-semibold cursor-pointer"
-            onClick={() => (window.location.href = "/dashboard")}
+            onClick={() =>
+              (window.location.href = loggedIn ? "/dashboard" : "/login")
+            }
           >
             Challenge App
           </h1>
 
           <div className="flex items-center gap-4">
             {/* Profile Icon */}
-            <button onClick={() => (window.location.href = "/profile")}>
-              <img
-                src="/default-avatar.png"
-                className="w-8 h-8 rounded-full border"
-                alt="Profile"
-              />
-            </button>
-
-            {/* Settings Icon (replaces hamburger) */}
-            <button
-              onClick={() => setShowSettings(true)}
-              className="p-2 rounded-full hover:bg-gray-100 transition"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-7 h-7"
-              >
-                <path
-                  d="M4 6h16M4 12h16M4 18h16"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
+            {loggedIn && (
+              <button onClick={() => (window.location.href = "/profile")}>
+                <img
+                  src="/default-avatar.png"
+                  className="w-8 h-8 rounded-full border"
+                  alt="Profile"
                 />
-              </svg>
-            </button>
+              </button>
+            )}
+
+            {/* Settings Icon */}
+            {loggedIn && (
+              <button
+                onClick={() => setShowSettings(true)}
+                className="p-2 rounded-full hover:bg-gray-100 transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-7 h-7"
+                >
+                  <path
+                    d="M4 6h16M4 12h16M4 18h16"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            )}
           </div>
         </header>
 
