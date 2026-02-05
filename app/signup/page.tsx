@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -18,6 +17,9 @@ export default function SignupPage() {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
+    // Import Supabase ONLY on the client
+    const { supabase } = await import("@/lib/supabaseClient");
 
     // 1. Create the user in Supabase Auth
     const { data, error: signupError } = await supabase.auth.signUp({
