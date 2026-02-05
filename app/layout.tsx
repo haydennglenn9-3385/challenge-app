@@ -1,17 +1,82 @@
+"use client";
+
 import "./globals.css";
-import NavBar from "@/components/NavBar";
+import { ReactNode, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
-export const metadata = {
-  title: "Challenge App",
-  description: "Queers & Allies Challenge Platform",
-};
+export default function RootLayout({ children }: { children: ReactNode }) {
+  const [showSettings, setShowSettings] = useState(false);
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    localStorage.removeItem("userProfile");
+    window.location.href = "/login";
+  };
+
   return (
     <html lang="en">
-      <body className="bg-white text-black antialiased">
-        <NavBar />
-        <main className="pt-16">{children}</main>
+      <body className="min-h-screen bg-white">
+        {/* Global Header */}
+        <header className="flex justify-between items-center px-6 py-4 border-b">
+          <h1 className="text-xl font-semibold">Challenge App</h1>
+
+          <div className="flex items-center gap-4">
+            {/* Profile Icon */}
+            <button onClick={() => (window.location.href = "/profile")}>
+              <img
+                src="/default-avatar.png"
+                className="w-8 h-8 rounded-full border"
+                alt="Profile"
+              />
+            </button>
+
+            {/* Settings Icon */}
+            <button
+              onClick={() => setShowSettings(true)}
+              className="p-2 rounded-full hover:bg-gray-100 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-7 h-7"
+              >
+                <path
+                  d="M4 6h16M4 12h16M4 18h16"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        {/* Page Content */}
+        <main className="max-w-xl mx-auto px-6 py-6">{children}</main>
+
+        {/* Settings Sheet */}
+        {showSettings && (
+          <div className="fixed inset-0 bg-black/40 flex justify-center items-end z-50">
+            <div className="bg-white w-full max-w-xl rounded-t-2xl p-6 shadow-xl animate-slide-up">
+              <h2 className="text-xl font-semibold mb-4">Settings</h2>
+
+              <button
+                onClick={handleLogout}
+                className="w-full text-left py-3 text-red-600 font-medium"
+              >
+                Log out
+              </button>
+
+              <button
+                onClick={() => setShowSettings(false)}
+                className="w-full text-left py-3 text-gray-600"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </body>
     </html>
   );
