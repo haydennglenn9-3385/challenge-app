@@ -3,6 +3,11 @@
 import "./globals.css";
 import { ReactNode, useEffect, useState } from "react";
 
+export const metadata = {
+  title: "Challenge App",
+  description: "Track your challenges",
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [showSettings, setShowSettings] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -38,7 +43,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </h1>
 
           <div className="flex items-center gap-4">
-            {/* Profile Icon */}
             {loggedIn && (
               <button onClick={() => (window.location.href = "/profile")}>
                 <img
@@ -49,7 +53,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </button>
             )}
 
-            {/* Settings Icon */}
             {loggedIn && (
               <button
                 onClick={() => setShowSettings(true)}
@@ -73,12 +76,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        {/* PAGE CONTENT */}
         <main className="flex-1 max-w-xl mx-auto w-full px-6 py-6">
           {children}
         </main>
 
-        {/* SETTINGS SHEET */}
         {showSettings && (
           <div className="fixed inset-0 bg-black/40 flex justify-center items-end z-50">
             <div className="bg-white w-full max-w-xl rounded-t-2xl p-6 shadow-xl animate-slide-up">
