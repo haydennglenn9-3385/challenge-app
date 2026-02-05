@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
@@ -50,15 +51,19 @@ function ProgressRing({ progress }: { progress: number }) {
 export default function ChallengeDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  // ✅ Unwrap async params (Next.js 14+ requirement)
+  const { id } = React.use(params);
+
   const router = useRouter();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [streak, setStreak] = useState(0);
   const [lastCheck, setLastCheck] = useState<string | null>(null);
 
   useEffect(() => {
-    const found = getChallengeById(params.id);
+    const found = getChallengeById(id);
+
     if (!found) {
       router.push("/dashboard");
       return;
@@ -67,7 +72,7 @@ export default function ChallengeDetailPage({
     setChallenge(found);
     setStreak(getStreak(found.id));
     setLastCheck(getLastCheckIn(found.id));
-  }, [params.id, router]);
+  }, [id, router]);
 
   const handleCheckIn = () => {
     if (!challenge) return;
