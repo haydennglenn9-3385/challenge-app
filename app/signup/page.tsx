@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 export default function SignupPage() {
   const router = useRouter();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,15 +33,22 @@ export default function SignupPage() {
       return;
     }
 
-    // 2. Create the user profile in the "users" table
+    // 2. Insert profile into "users" table
     if (data.user) {
-      await supabase.from("users").insert({
+      const { error: profileError } = await supabase.from("users").insert({
         id: data.user.id,
         name,
         avatar_url: null,
       });
+
+      if (profileError) {
+        setLoading(false);
+        setError("Account created, but profile setup failed.");
+        return;
+      }
     }
 
+    // 3. Redirect to login
     setLoading(false);
     router.push("/login");
   };
